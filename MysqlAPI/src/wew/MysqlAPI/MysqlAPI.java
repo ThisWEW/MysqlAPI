@@ -93,6 +93,21 @@ public class MysqlAPI {
 				}
 				return null;
 			 }
+			 public List<String> getAllKey(){
+				 try {
+						PreparedStatement state = connect.prepareStatement("select * from "+SqlTable);
+						ResultSet res = state.executeQuery();
+						List<String> args = new ArrayList<>();
+						if(res.next()){
+						    args.add(res.getString(1));
+						}else{
+							return args;
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return null;
+			 }
 		private String getFields(){
 			StringBuilder builder = new StringBuilder();
 			for(String arg:fields){
