@@ -110,8 +110,10 @@ public class MysqlAPI {
 			 }
 		private String getFields(){
 			StringBuilder builder = new StringBuilder();
+			int i = 0;
 			for(String arg:fields){
-				builder.append(arg+" TEXT");
+				i = i+1;
+				builder.append(arg+" TEXT"+(i==fields.length?"":","));
 			}
 			return builder.toString();
 		}
@@ -127,6 +129,6 @@ public class MysqlAPI {
 			for(String arg:data){
 				builder.append("'"+arg+"'"+(data.indexOf(arg) == data.size()-1?"":","));
 			}
-			return Sql;
+			return builder.toString();
 		}
 }
