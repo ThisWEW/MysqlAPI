@@ -85,9 +85,8 @@ public class MysqlAPI {
 						for(int i = 1;i<=length;i++){
 							args.add(res.getString(i));
 						}
-					}else{
-						return args;
 					}
+					return args;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -98,11 +97,10 @@ public class MysqlAPI {
 						PreparedStatement state = connect.prepareStatement("select * from "+SqlTable);
 						ResultSet res = state.executeQuery();
 						List<String> args = new ArrayList<>();
-						if(res.next()){
+						while(res.next()){
 						    args.add(res.getString(1));
-						}else{
-							return args;
 						}
+						return args;
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
