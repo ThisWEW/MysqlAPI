@@ -92,6 +92,15 @@ public class MysqlAPI {
 				}
 				return null;
 			 }
+			 public void deleteData(String key,String keyData){
+				 try {
+						PreparedStatement state = connect.prepareStatement("delete from "+SqlTable+" where "+key+"=?");
+						state.setString(1, keyData);
+						state.executeUpdate();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			 }
 			 public List<String> getAllKey(){
 				 try {
 						PreparedStatement state = connect.prepareStatement("select * from "+SqlTable);
