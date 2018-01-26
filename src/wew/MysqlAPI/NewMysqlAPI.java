@@ -29,14 +29,12 @@ public class NewMysqlAPI {
 	 * µÇÂ½Êý¾Ý¿â
 	 */
 	public void login(String ip, String port, String user, String password, String database, String table) {
-		connect();
 		SqlIp = ip;
 		SqlPort = port;
 		Sql = database;
 		SqlUser = user;
 		SqlPasd = password;
 		SqlTable = table;
-		close();
 	}
 	
 	/**
