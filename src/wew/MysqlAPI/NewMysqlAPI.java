@@ -138,17 +138,17 @@ public class NewMysqlAPI {
 	 * value = 需要修改的列名
 	 * valuedata = 修改的值
 	 */
-	public void onUpdate(String table, String key, String keydata, String value, Object valuedata) {
+	public void onUpdate(String key, String keydata, String value, Object valuedata) {
 		connect();
 		Statement stmt = null;
 		try {
 			stmt = connect.createStatement();
-			ResultSet res = stmt.executeQuery("select 1 from " + table + " where " + key + "='" + keydata + "'");
+			ResultSet res = stmt.executeQuery("select 1 from " + SqlTable + " where " + key + "='" + keydata + "'");
 			if(!res.next()) {
-				stmt.executeUpdate("insert into " + table + " values('" + keydata + "','" + valuedata + "')");
+				stmt.executeUpdate("insert into " + SqlTable + " values('" + keydata + "','" + valuedata + "')");
 			} else {
-				res = stmt.executeQuery("select " + value + " from " + table + " where " + key + "='" + keydata + "'");
-				stmt.executeUpdate("update " + table + " set " + value + "='" + valuedata + "' where " + key + "='" + keydata + "'");
+				res = stmt.executeQuery("select " + value + " from " + SqlTable + " where " + key + "='" + keydata + "'");
+				stmt.executeUpdate("update " + SqlTable + " set " + value + "='" + valuedata + "' where " + key + "='" + keydata + "'");
 			}
 			stmt.close();
 		} catch (SQLException e) {
@@ -162,11 +162,11 @@ public class NewMysqlAPI {
 	 * keydata = 主键的名称
 	 * value = 需要查找的值
 	 */
-	public Object onGetData(String table, String key, String keydata, String value) {
+	public Object onGetData(String key, String keydata, String value) {
 		connect();
 		Connection con = connect;
 		try {
-			ResultSet rs = statement.executeQuery("select " + value + " from " + table + " where " + key + "='" + keydata + "'");
+			ResultSet rs = statement.executeQuery("select " + value + " from " + SqlTable + " where " + key + "='" + keydata + "'");
 			while(rs.next()){
 				 return rs.getString(1);
 			 }
