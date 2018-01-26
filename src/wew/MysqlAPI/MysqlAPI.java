@@ -18,6 +18,7 @@ public class MysqlAPI {
 		private String SqlPasd = null;
 		private String[] fields ;
 		private Connection connect = null;
+		private Statement statement = null;
 		public MysqlAPI(String... field){
 			fields = field;
 		}
@@ -36,6 +37,7 @@ public class MysqlAPI {
 					Connection conn = null;
 					try {
 						conn = DriverManager.getConnection(url,user,password);
+						statement = conn.createStatement();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -57,7 +59,8 @@ public class MysqlAPI {
 						e.printStackTrace();
 					}
 			 }
-			 public void setData(String key ,String keyData,List<String> fields,List<String> data){
+			 @SuppressWarnings("resource")
+			public void setData(String key ,String keyData,List<String> fields,List<String> data){
 				 try {
 					PreparedStatement state = connect.prepareStatement("select * from "+SqlTable+" where "+key+"=?");
 					state.setString(1, keyData);
@@ -167,4 +170,30 @@ public class MysqlAPI {
 				e.printStackTrace();
 			}
 	    }
+		
+		/**
+		 * key = 主键列名
+		 * keydata = 主键的名称
+		 * value = 需要查找的值
+		 * @param table
+		 * @param key
+		 * @param keydata
+		 * @param value
+		 * @return
+		 */
+		public Object onGetData(String table, String key, String keydata, String value) {
+			connect();
+			Connection con = connect;
+			try {
+				ResultSet rs = statement.executeQuery("select " + value + " from " + table + " where " + key + "='" + keydata + "'");
+				while(rs.next()){
+					 return rs.getString(1);
+				 }
+				 con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+			return null;
+		}
 }
