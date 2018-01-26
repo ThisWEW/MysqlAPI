@@ -1,5 +1,5 @@
 name: MysqlAPI
-version: 1.0
+version: 1.6
 main: wew.MysqlAPI.Main
 commands:
   mysqlapi:
